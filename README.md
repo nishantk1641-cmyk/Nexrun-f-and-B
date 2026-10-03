@@ -1,79 +1,45 @@
-# Nexrun AI — Full-Stack Starter
+# Nexrun AI — Supabase Full-Stack
 
-This version upgrades the original frontend into a Node.js full-stack starter.
+This build converts the original SQLite authentication/database layer to **Supabase Auth + Postgres** while keeping the Nexrun UI, OpenAI backend and Razorpay checkout.
 
-## Included
+## Architecture
 
-- Existing Nexrun AI UI preserved
-- Node.js + Express backend
-- SQLite database with users, chats and payments
-- Email/password authentication with bcrypt password hashing
-- HttpOnly JWT session cookie
-- OpenAI Responses API integration (server-side)
-- Razorpay order + Checkout integration
-- Razorpay payment signature verification
-- Razorpay webhook verification
-- Free/Pro plan state stored in the database
-- `.env.example` for secrets
+- Supabase Auth: email/password signup, login and sessions
+- Supabase Postgres: `profiles`, `chats`, `payments`
+- Node.js/Express: secure OpenAI and Razorpay server endpoints
+- Razorpay: order creation, signature verification and webhook handling
+- Browser: only the Supabase publishable/anon key is exposed
+- Server: Supabase service-role key, OpenAI key and Razorpay secret stay in `.env`
 
-## 1. Install
+## Setup
 
-Requires Node.js 20+.
+1. In Supabase SQL Editor, run `supabase-schema.sql`.
+2. Copy `.env.example` to `.env`.
+3. Put your Supabase project URL in both `.env` and `config.js`.
+4. Put your Supabase **publishable/anon key** in `config.js`.
+5. Put your Supabase **service-role/secret key** only in `.env`.
+6. Add your OpenAI and Razorpay credentials to `.env`.
+7. Run:
 
 ```bash
 npm install
-```
-
-## 2. Configure secrets
-
-Copy `.env.example` to `.env` and fill in:
-
-- `JWT_SECRET`
-- `OPENAI_API_KEY`
-- `OPENAI_MODEL` (default: `gpt-5-mini`)
-- `RAZORPAY_KEY_ID`
-- `RAZORPAY_KEY_SECRET`
-- `RAZORPAY_WEBHOOK_SECRET`
-- `PRO_PLAN_AMOUNT_INR`
-
-Never commit `.env`.
-
-## 3. Run
-
-```bash
 npm start
 ```
 
-Open `http://localhost:3000`.
+Then open `http://localhost:3000`.
 
-## 4. Razorpay webhook
+## Supabase Auth email confirmation
 
-In Razorpay, create a webhook pointing to:
+If email confirmation is enabled in Supabase Auth, new users must confirm their email before a session is created. For quick local testing you can disable confirmation in the Supabase Auth settings.
+
+## Razorpay webhook
+
+Set the webhook URL to:
 
 `https://YOUR-DOMAIN/api/payments/webhook`
 
-Use the same value as `RAZORPAY_WEBHOOK_SECRET` in your server environment. The backend verifies the webhook HMAC before changing payment state.
+and use the same webhook secret in `RAZORPAY_WEBHOOK_SECRET`.
 
-## Payment flow
+## Security
 
-1. User signs in.
-2. Nexrun asks the backend to create a Razorpay order.
-3. Razorpay Checkout opens in the browser.
-4. Checkout returns payment identifiers/signature.
-5. Backend verifies the signature using the Razorpay secret.
-6. The user's plan becomes `pro` in SQLite.
-7. Webhooks provide an additional server-to-server payment event path.
-
-## Important production work before launch
-
-- Use HTTPS and a strong randomly generated `JWT_SECRET`.
-- Use a managed PostgreSQL database instead of local SQLite for multiple server instances.
-- Add rate limiting, CSRF protection appropriate to your deployment, email verification, password reset, account deletion, audit logging and abuse controls.
-- Add subscription lifecycle handling if you want recurring monthly/yearly billing rather than the included one-time Pro order.
-- Configure Razorpay production keys only after completing your merchant/KYC setup and testing the full payment lifecycle.
-- Add server-side authorization for every Pro-only feature; do not rely on hiding frontend buttons.
-- Set a restrictive Content Security Policy and other security headers for production.
-
-## Notes
-
-The OpenAI integration uses the Responses API. The old Assistants API was sunset in August 2026, so this project intentionally uses Responses instead.
+Never put `SUPABASE_SERVICE_ROLE_KEY`, `RAZORPAY_KEY_SECRET`, `RAZORPAY_WEBHOOK_SECRET`, or `OPENAI_API_KEY` in `config.js`, `app.js`, `index.html`, or any public GitHub repository.
