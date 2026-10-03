@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#090b14" />
+  <title>Nexrun AI — AI Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <div class="brand"><span class="brand-mark">N</span><span>Nexrun <b>AI</b></span></div>
+      <button class="new-chat" id="newChat">＋ New chat</button>
+      <nav class="nav">
+        <button class="nav-item active" data-view="chat">⌁ <span>AI Chat</span></button>
+        <button class="nav-item" data-view="explore">✦ <span>Explore</span></button>
+        <button class="nav-item" data-view="history">◷ <span>History</span></button>
+        <button class="nav-item" data-view="projects">▦ <span>Projects</span></button>
+      </nav>
+      <div class="side-label">TOOLS</div>
+      <button class="nav-item" data-view="tools">⚡ <span>AI Tools</span></button>
+      <button class="nav-item" data-view="images">▧ <span>Image Studio</span></button>
+      <div class="sidebar-spacer"></div>
+      <button class="nav-item" data-view="settings">⚙ <span>Settings</span></button>
+      <div class="user-mini"><div class="avatar">L</div><div><strong>Legend</strong><small>Free account</small></div><span>•••</span></div>
+    </aside>
+
+    <main class="main">
+      <header class="topbar">
+        <button class="icon-btn mobile-only" id="menuBtn">☰</button>
+        <div class="mobile-brand">Nexrun <b>AI</b></div>
+        <div class="top-actions"><button class="icon-btn" id="themeBtn" title="Toggle theme">◐</button><button class="profile-btn">L</button></div>
+      </header>
+
+      <section id="content" class="content"></section>
+    </main>
+  </div>
+  <div class="toast" id="toast"></div>
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
