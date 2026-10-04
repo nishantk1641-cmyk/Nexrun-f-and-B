@@ -1,21 +1,22 @@
 {
-  "name": "nexrun-ai-fullstack",
+  "name": "nexrun-ai-functions",
+  "description": "Firebase Cloud Functions v2 for Nexrun AI vibe coding platform",
   "version": "1.0.0",
-  "private": true,
-  "description": "Nexrun AI full-stack starter with Node.js, SQLite, authentication, OpenAI and Razorpay.",
-  "type": "module",
+  "main": "index.js",
+  "engines": {
+    "node": "18"
+  },
   "scripts": {
-    "start": "node server.js",
-    "dev": "node --watch server.js"
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions"
   },
   "dependencies": {
-    "bcryptjs": "^3.0.2",
-    "better-sqlite3": "^12.4.1",
-    "cookie-parser": "^1.4.7",
-    "dotenv": "^17.2.2",
-    "express": "^5.1.0",
-    "jsonwebtoken": "^9.0.2",
-    "openai": "^6.7.0",
-    "razorpay": "^2.9.6"
-  }
+    "@google/genai": "^0.1.1",
+    "@google/generative-ai": "^0.24.0",
+    "firebase-admin": "^12.0.0",
+    "firebase-functions": "^5.0.0"
+  },
+  "private": true
 }

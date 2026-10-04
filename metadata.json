@@ -1,0 +1,6 @@
+{
+  "name": "Nexrun AI",
+  "description": "AI-powered vibe coding platform for beginners and developers with live preview, AI builder, and code editor",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
